@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
-// Status options depending on bug type
 const STATUS_OPTIONS = {
   bug: ["new", "started", "resolved"],
   feature: ["new", "started", "completed"],
