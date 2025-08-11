@@ -1,7 +1,9 @@
+# 🐞 Bug Tracking System
 
-🐞 Bug Tracking System
-A role-based bug tracking platform designed for streamlined project and issue management.
-Built with React.js, Node.js, Express.js, and MongoDB, it provides robust authentication, user access control, and media handling for project and bug management.
+A **role-based bug tracking platform** designed for streamlined project and issue management.  
+Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provides **robust authentication**, **user access control**, and **media handling** for project and bug management.
+
+---
 
 <img width="868" height="577" alt="image" src="https://github.com/user-attachments/assets/79d2d531-d68c-4b7d-a3b8-0fb8846022ff" />
 <img width="1345" height="605" alt="image" src="https://github.com/user-attachments/assets/0e636caf-e2c6-42f0-8bbe-0825083c2511" />
