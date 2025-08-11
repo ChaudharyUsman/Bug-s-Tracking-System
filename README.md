@@ -67,7 +67,7 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 
 ---
 
-#### 👨‍💻Developer Users:
+### 👨‍💻 Developer Users:
 - View **assigned bugs** and projects.
 - Update the **status** of bugs assigned to them.
 
