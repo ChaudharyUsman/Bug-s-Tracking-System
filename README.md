@@ -54,5 +54,69 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 <img width="1334" height="625" alt="image" src="https://github.com/user-attachments/assets/5ec2f765-abd5-4e41-b2fd-78485d3ee816" />
 
 
+---
+### 🐛 Bug Management
+#### QA Users:
+- Access **only assigned projects**.
+- Create, view, edit, and delete bugs in their projects.
 
+<img width="1319" height="636" alt="image" src="https://github.com/user-attachments/assets/e6fdf4da-28dd-4c87-a89a-b74dc506061c" />
+
+<img width="1325" height="631" alt="image" src="https://github.com/user-attachments/assets/729adda5-9c8c-448b-8d9b-6457e12b6f2b" />
+<img width="631" height="609" alt="image" src="https://github.com/user-attachments/assets/bc771491-6d65-408e-915f-9228a400a377" />
+
+---
+
+#### Developer Users:
+- View **assigned bugs** and projects.
+- Update the **status** of bugs assigned to them.
+
+<img width="1332" height="622" alt="image" src="https://github.com/user-attachments/assets/b110fcd7-9c8b-4697-84c7-42d8d82b805d" />
+<img width="1349" height="629" alt="image" src="https://github.com/user-attachments/assets/7aaf4f4b-da90-4263-8ca7-d51bfc0575cb" />
+
+
+---
+
+### 📝 Bug Details
+- **title** _(required, unique per project)_
+- **description** _(optional)_
+- **deadline** _(optional)_
+- **screenshot** _(optional, only `.png` & `.gif` supported)_
+- **type**: `feature` or `bug` _(required)_
+- **status** _(required)_:
+  - If **type = feature** → `new`, `started`, `completed`
+  - If **type = bug** → `new`, `started`, `resolved`
+
+---
+
+## 🛠 Tech Stack
+
+### **Frontend**
+- React.js  
+- React Router  
+- Axios  
+- Formik _(form state management)_  
+- Yup _(form validation)_  
+
+### **Backend**
+- Node.js  
+- Express.js  
+- MongoDB + Mongoose  
+
+### **Authentication**
+- JWT _(JSON Web Tokens)_  
+- Custom middleware for role-based access control  
+
+### **File Uploads**
+- Multer _(with validation for `.png` and `.gif` only)_
+
+---
+
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/bug-tracking-system.git
+cd bug-tracking-system
 
