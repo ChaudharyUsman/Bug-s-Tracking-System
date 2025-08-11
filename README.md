@@ -22,9 +22,15 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/79d2d531-d68c-4b7d-a3b8-0fb8846022ff" />
 
 
-
 ---
 
+**Admin**
+- Create new users (any role: Manager, QA, Developer, Admin)
+- View all users in the system
+- Create new projects
+- View all projects
+- Create bugs for any project
+- View all bugs across all projects
 
 <img width="1345" height="605" alt="image" src="https://github.com/user-attachments/assets/0e636caf-e2c6-42f0-8bbe-0825083c2511" />
 
