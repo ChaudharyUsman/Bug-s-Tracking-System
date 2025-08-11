@@ -9,7 +9,8 @@ import BugProjct from './page/bugProject/BugsProject';
 import ShowAllBugs from './page/showAllBugs/ShowALlbugs';
 import DevelopersDashBoard from './page/developerDash/DeveloperBoard';
 import ErrorPage from './components/ErrorPage/Error';
-import Filtersss from './components/FillterBugs/FilterBugs'
+import Filtersss from './components/FillterBugs/FilterBugs';
+import DeveloperBugs from './components/DeveloperAsssignedPro/ShowAllDeveloper';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/All_Bugs" element={<PrivateRoute><ShowAllBugs /></PrivateRoute>} />
         <Route path="/devdashboard" element={<PrivateRoute><DevelopersDashBoard /></PrivateRoute>} />
         <Route path="/filtersss/:projectId" element={<PrivateRoute><Filtersss /></PrivateRoute>} />
+        <Route path="/DeveloperBug" element={<PrivateRoute><DeveloperBugs /></PrivateRoute>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <ToastContainer />

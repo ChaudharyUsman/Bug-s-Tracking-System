@@ -10,6 +10,7 @@ const validationSchema = Yup.object({
   types: Yup.string().oneOf(["bug", "feature"]).required("Type is required"),
   status: Yup.string().required("Status is required"),
   assignedDeveloper: Yup.string().required("Please assign a developer"),
+  project: Yup.string().required("Project is required"),
 });
 
 const BugProjects = ({ token, userId }) => {
@@ -19,7 +20,6 @@ const BugProjects = ({ token, userId }) => {
   const [editBug, setEditBug] = useState(null);
   const [file, setFile] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [bugToDelete, setBugToDelete] = useState(null);
 
@@ -74,23 +74,13 @@ const BugProjects = ({ token, userId }) => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const projectId =
-        editBug?.project?._id ||
-        values.project ||
-        selectedProject?._id ||
-        (projects.length === 1 ? projects[0]._id : "");
-      if (!projectId) {
-        toast.error("Please select a project before creating a bug");
-        return;
-      }
-
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("description", values.description);
       formData.append("deadline", values.deadline);
       formData.append("types", values.types);
       formData.append("status", values.status);
-      formData.append("project", projectId);
+      formData.append("project", values.project);
       formData.append("assignedDeveloper", values.assignedDeveloper);
       if (file) formData.append("screenshot", file);
 
@@ -117,8 +107,8 @@ const BugProjects = ({ token, userId }) => {
       setEditBug(null);
       setFile(null);
       setShowForm(false);
-      setSelectedProject(null);
     } catch (err) {
+      console.error("Bug creation error:", err.response || err);
       toast.error(err.response?.data?.message || "Error saving bug");
     }
   };
@@ -144,7 +134,6 @@ const BugProjects = ({ token, userId }) => {
 
   const handleEdit = (bug) => {
     setEditBug(bug);
-    setSelectedProject(bug.project || null);
     setShowForm(true);
   };
 
@@ -153,7 +142,6 @@ const BugProjects = ({ token, userId }) => {
       <button
         onClick={() => {
           setEditBug(null);
-          setSelectedProject(null);
           setShowForm(true);
         }}
         disabled={projects.length === 0}
@@ -201,10 +189,7 @@ const BugProjects = ({ token, userId }) => {
                 deadline: editBug?.deadline?.split("T")[0] || "",
                 types: editBug?.types || "bug",
                 status: editBug?.status || "new",
-                project:
-                  editBug?.project?._id ||
-                  selectedProject?._id ||
-                  (projects.length === 1 ? projects[0]._id : ""),
+                project: editBug?.project?._id || (projects.length === 1 ? projects[0]._id : ""),
                 assignedDeveloper: editBug?.assignedDeveloper?._id || "",
               }}
               enableReinitialize
@@ -240,6 +225,19 @@ const BugProjects = ({ token, userId }) => {
                       ))}
                     </Field>
 
+                 
+                    {projects.length > 1 && (
+                      <>
+                        <Field as="select" name="project" className="border p-2 w-full bg-gray-700">
+                          <option value="">Select Project</option>
+                          {projects.map((project) => (
+                            <option key={project._id} value={project._id}>{project.title}</option>
+                          ))}
+                        </Field>
+                        <ErrorMessage name="project" component="div" className="text-red-400" />
+                      </>
+                    )}
+
                     <Field as="select" name="assignedDeveloper" className="border p-2 w-full bg-gray-700">
                       <option value="">Select Developer</option>
                       {developers.map((dev) => (
@@ -260,7 +258,6 @@ const BugProjects = ({ token, userId }) => {
                         onClick={() => {
                           setShowForm(false);
                           setEditBug(null);
-                          setSelectedProject(null);
                         }}
                       >
                         Cancel

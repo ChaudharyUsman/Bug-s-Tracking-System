@@ -60,17 +60,7 @@ const BugList = () => {
     }
   }, [keyword, allBugs]);
 
-  const searchHandler = (e) => {
-    e.preventDefault();
-    if (keyword.trim() === "") {
-      setBugs(allBugs);
-      return;
-    }
-    const filtered = allBugs.filter((bug) =>
-      bug.title.toLowerCase().includes(keyword.toLowerCase())
-    );
-    setBugs(filtered);
-  };
+ 
 
   const confirmDelete = (id) => {
     setBugToDelete(id);
