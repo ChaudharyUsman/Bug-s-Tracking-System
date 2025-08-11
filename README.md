@@ -24,7 +24,7 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 
 ---
 
-**Admin**
+###👤Admin
 - Create new users (any role: Manager, QA, Developer, Admin)
 - View all users in the system
 - Create new projects
