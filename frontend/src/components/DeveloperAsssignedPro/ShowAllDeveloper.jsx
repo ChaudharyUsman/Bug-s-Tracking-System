@@ -102,23 +102,30 @@ const BugList = () => {
               const statusOptions = STATUS_OPTIONS[bug.types] || [];
 
               return (
-                <div key={bug._id} className="bg-gray-700 p-4 rounded shadow">
+                <div key={bug._id} className="bg-gray-700 p-4 rounded shadow space-y-2">
                   <h3 className="font-bold text-lg">{bug.title}</h3>
                   <p className="text-gray-300">{bug.description}</p>
-                  <p className="text-sm text-gray-400 mb-2">
-                    Status: {bug.status}
+
+                  <p className="text-sm text-gray-400">
+                    <strong>Project:</strong> {bug.project?.title || "Unknown"}
+                  </p>
+
+                  <p className="text-sm text-gray-400 capitalize">
+                    <strong>Type:</strong> {bug.types}
+                  </p>
+
+                  <p className="text-sm text-gray-400">
+                    <strong>Status:</strong> {bug.status}
                   </p>
 
                   <div className="flex items-center gap-2">
                     <label htmlFor={`status-${bug._id}`} className="text-sm">
-                      Change Status:
+                      <strong>Change Status:</strong>
                     </label>
                     <select
                       id={`status-${bug._id}`}
                       value={bug.status}
-                      onChange={(e) =>
-                        handleStatusChange(bug._id, e.target.value)
-                      }
+                      onChange={(e) => handleStatusChange(bug._id, e.target.value)}
                       disabled={updatingId === bug._id}
                       className="bg-gray-600 text-white p-1 rounded"
                     >
@@ -129,6 +136,17 @@ const BugList = () => {
                       ))}
                     </select>
                   </div>
+
+                  {bug.screenshot && (
+                    <div>
+                      <p className="text-sm text-gray-400"><strong>Screenshot:</strong></p>
+                      <img
+                        src={`http://localhost:3500/public/${bug.screenshot}`}
+                        alt="Bug Screenshot"
+                        className="mt-1 max-h-40 rounded border border-gray-500"
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}
