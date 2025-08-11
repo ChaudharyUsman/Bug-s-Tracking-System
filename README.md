@@ -18,14 +18,16 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
   - Register with **name, email, password, and user type**.
   - Login & receive a JWT token.
   - Logout securely.
-<img width="868" height="577" alt="image" src="https://github.com/user-attachments/assets/79d2d531-d68c-4b7d-a3b8-0fb8846022ff" />
+<img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/77a1aa09-eefd-42e7-827d-06e7df8abff0" />
+<img width="200" height="300" alt="image" src="https://github.com/user-attachments/assets/79d2d531-d68c-4b7d-a3b8-0fb8846022ff" />
+
 
 
 ---
 
 
 <img width="1345" height="605" alt="image" src="https://github.com/user-attachments/assets/0e636caf-e2c6-42f0-8bbe-0825083c2511" />
-<img width="587" height="622" alt="image" src="https://github.com/user-attachments/assets/77a1aa09-eefd-42e7-827d-06e7df8abff0" />
+
 
 <img width="1322" height="633" alt="image" src="https://github.com/user-attachments/assets/933fb3d1-77ef-44ab-a940-f906b60da867" />
 <img width="587" height="547" alt="image" src="https://github.com/user-attachments/assets/27c5b9a6-db86-4b93-a770-a79eae64221c" />
