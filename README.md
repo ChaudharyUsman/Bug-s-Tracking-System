@@ -43,3 +43,16 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 <img width="489" height="643" alt="image" src="https://github.com/user-attachments/assets/7b18c2b4-f0ef-412e-8f72-aa5e58ec0d67" />
 
 
+---
+
+
+### 📂 Project Management (Manager Role)
+- Create, edit, and delete projects.
+- Assign **multiple QAs and Developers** to each project.
+- View all bugs associated with managed projects.
+
+<img width="1334" height="625" alt="image" src="https://github.com/user-attachments/assets/5ec2f765-abd5-4e41-b2fd-78485d3ee816" />
+
+
+
+
