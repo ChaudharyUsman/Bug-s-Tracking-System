@@ -50,7 +50,7 @@ const AssignedProjects = () => {
     }
   }, [keyword, projects]);
 
-  // Navigate to bugs page with project ID and title (can pass as state or query params)
+  
   const handleViewBugs = (projectId, projectTitle) => {
     navigate("/DeveloperBug", { state: { projectId, projectTitle } });
   };
