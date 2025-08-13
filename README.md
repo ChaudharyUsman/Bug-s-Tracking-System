@@ -32,7 +32,8 @@ Built with **React.js**, **Node.js**, **Express.js**, and **MongoDB**, it provid
 - Create bugs for any project
 - View all bugs across all projects
 
-<img width="1345" height="605" alt="image" src="https://github.com/user-attachments/assets/0e636caf-e2c6-42f0-8bbe-0825083c2511" />
+<img width="1332" height="637" alt="image" src="https://github.com/user-attachments/assets/eb840394-e38e-465b-a035-bd76ee11d709" />
+
 
 
 <img width="1322" height="633" alt="image" src="https://github.com/user-attachments/assets/933fb3d1-77ef-44ab-a940-f906b60da867" />
