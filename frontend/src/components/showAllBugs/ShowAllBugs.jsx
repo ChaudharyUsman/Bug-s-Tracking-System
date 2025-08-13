@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { motion, AnimatePresence } from "framer-motion";
 
 const BugList = () => {
   const [bugs, setBugs] = useState([]);
@@ -12,11 +13,9 @@ const BugList = () => {
   const token = localStorage.getItem("token");
 
   const [allBugs, setAllBugs] = useState([]);
-
   const [bugToDelete, setBugToDelete] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -46,7 +45,7 @@ const BugList = () => {
   }, []);
 
   useEffect(() => {
-    if (keyword.trim() === '') {
+    if (keyword.trim() === "") {
       setBugs(allBugs);
     } else {
       const filtered = allBugs.filter((p) =>
@@ -55,7 +54,6 @@ const BugList = () => {
       setBugs(filtered);
     }
   }, [keyword, allBugs]);
-
 
   const confirmDelete = (id) => {
     setBugToDelete(id);
@@ -136,41 +134,54 @@ const BugList = () => {
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder="🔎 Search by bug title..."
+          placeholder="🔍︎ Search by bug title..."
           className="p-2 rounded bg-gray-700 border border-gray-600 text-white w-full"
         />
       </div>
 
       {/* Delete Popup */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full border border-gray-700 text-center">
-            <h3 className="text-lg font-bold text-red-400 mb-4">
-              Confirm Delete
-            </h3>
-            <p className="text-gray-300 mb-6">
-              Are you sure you want to delete this bug? This action cannot be undone.
-            </p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={() => {
-                  setShowDeleteConfirm(false);
-                  setBugToDelete(null);
-                }}
-                className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={deleteBug}
-                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {showDeleteConfirm && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full border border-gray-700 text-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <h3 className="text-lg font-bold text-red-400 mb-4">
+                Confirm Delete
+              </h3>
+              <p className="text-gray-300 mb-6">
+                Are you sure you want to delete this bug? This action cannot be
+                undone.
+              </p>
+              <div className="flex justify-center gap-4">
+                <button
+                  onClick={() => {
+                    setShowDeleteConfirm(false);
+                    setBugToDelete(null);
+                  }}
+                  className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={deleteBug}
+                  className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="flex items-center justify-center mb-6 gap-2">
         <FaBug className="text-red-500 text-3xl" />
@@ -178,157 +189,205 @@ const BugList = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {bugs.map((bug) => (
-          <div
-            key={bug._id}
-            className="bg-gray-800 p-5 rounded-xl shadow-lg border border-gray-700 hover:border-red-500 transition"
-          >
-            <h2 className="text-xl font-semibold text-red-400">{bug.title}</h2>
-            <p className="text-gray-300 mt-1">{bug.description}</p>
-            <p className="text-sm text-gray-400 mt-2">Status: {bug.status}</p>
-            <p className="text-sm text-gray-400">Type: {bug.types}</p>
+        <AnimatePresence>
+          {bugs.map((bug) => (
+            <motion.div
+              key={bug._id}
+              className="bg-gray-800 p-5 rounded-xl shadow-lg border border-gray-700 hover:border-red-500 transition"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-xl font-semibold text-red-400">
+                {bug.title}
+              </h2>
+              <p className="text-gray-300 mt-1">{bug.description}</p>
+              <p className="text-sm text-gray-400 mt-2">
+                Status: {bug.status}
+              </p>
+              <p className="text-sm text-gray-400">Type: {bug.types}</p>
 
-            {bug.screenshot && (
-              <img
-                src={`http://localhost:3500/public/${bug.screenshot}`}
-                alt="Screenshot"
-                className="mt-3 w-full h-32 object-cover rounded border border-gray-700"
-              />
-            )}
+              {bug.screenshot && (
+                <img
+                  src={`http://localhost:3500/public/${bug.screenshot}`}
+                  alt="Screenshot"
+                  className="mt-3 w-full h-32 object-cover rounded border border-gray-700"
+                />
+              )}
 
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() => startEdit(bug)}
-                className="flex items-center gap-2 text-blue-400 hover:text-blue-500"
-              >
-                <FaEdit /> Edit
-              </button>
-              <button
-                onClick={() => confirmDelete(bug._id)}
-                className="flex items-center gap-2 text-red-500 hover:text-red-600"
-              >
-                <FaTrash /> Delete
-              </button>
-            </div>
-          </div>
-        ))}
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={() => startEdit(bug)}
+                  className="flex items-center gap-2 text-blue-400 hover:text-blue-500"
+                >
+                  <FaEdit /> Edit
+                </button>
+                <button
+                  onClick={() => confirmDelete(bug._id)}
+                  className="flex items-center gap-2 text-red-500 hover:text-red-600"
+                >
+                  <FaTrash /> Delete
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
-      {editBug && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <Formik
-            initialValues={formData}
-            validationSchema={validationSchema}
-            onSubmit={handleUpdate}
-            enableReinitialize
+      {/* Edit Modal */}
+      <AnimatePresence>
+        {editBug && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            {({ setFieldValue, values }) => (
-              <Form className="bg-gray-800 p-6 rounded-xl w-full max-w-md shadow-xl text-white border border-gray-700">
-                <h2 className="text-2xl font-bold mb-4 text-center text-red-400">
-                  Edit Bug
-                </h2>
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Formik
+                initialValues={formData}
+                validationSchema={validationSchema}
+                onSubmit={handleUpdate}
+                enableReinitialize
+              >
+                {({ setFieldValue, values }) => (
+                  <Form className="bg-gray-800 p-6 rounded-xl w-full max-w-md shadow-xl text-white border border-gray-700">
+                    <h2 className="text-2xl font-bold mb-4 text-center text-red-400">
+                      Edit Bug
+                    </h2>
 
-                <Field
-                  name="title"
-                  placeholder="Title"
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                />
-                <ErrorMessage name="title" component="div" className="text-red-400 text-sm" />
-
-                <Field
-                  as="textarea"
-                  name="description"
-                  placeholder="Description"
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                  maxLength={50}
-
-                />
-                <ErrorMessage name="description" component="div" className="text-red-400 text-sm" />
-
-                <Field
-                  type="date"
-                  name="deadline"
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                />
-                <ErrorMessage name="deadline" component="div" className="text-red-400 text-sm" />
-
-                <Field
-                  as="select"
-                  name="types"
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                  onChange={(e) => {
-                    setFieldValue("types", e.target.value);
-                    setFieldValue("status", "");
-                  }}
-                >
-                  <option value="">Select Type</option>
-                  <option value="feature">Feature</option>
-                  <option value="bug">Bug</option>
-                </Field>
-                <ErrorMessage name="types" component="div" className="text-red-400 text-sm" />
-
-                <Field
-                  as="select"
-                  name="status"
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                  disabled={!values.types}
-                >
-                  <option value="">Select Status</option>
-                  {values.types === "feature" && (
-                    <>
-                      <option value="new">New</option>
-                      <option value="started">Started</option>
-                      <option value="completed">Completed</option>
-                    </>
-                  )}
-                  {values.types === "bug" && (
-                    <>
-                      <option value="new">New</option>
-                      <option value="started">Started</option>
-                      <option value="resolved">Resolved</option>
-                    </>
-                  )}
-                </Field>
-                <ErrorMessage name="status" component="div" className="text-red-400 text-sm" />
-
-                {formData.existingScreenshot && !formData.screenshot && (
-                  <div className="mb-3">
-                    <p className="text-gray-400 text-sm mb-2">Current screenshot:</p>
-                    <img
-                      src={`http://localhost:3500/public/${formData.existingScreenshot}`}
-                      alt="Current Screenshot"
-                      className="w-full h-24 object-cover rounded border border-gray-700"
+                    <Field
+                      name="title"
+                      placeholder="Title"
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
                     />
-                  </div>
+                    <ErrorMessage
+                      name="title"
+                      component="div"
+                      className="text-red-400 text-sm"
+                    />
+
+                    <Field
+                      as="textarea"
+                      name="description"
+                      placeholder="Description"
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
+                      maxLength={50}
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className="text-red-400 text-sm"
+                    />
+
+                    <Field
+                      type="date"
+                      name="deadline"
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
+                    />
+                    <ErrorMessage
+                      name="deadline"
+                      component="div"
+                      className="text-red-400 text-sm"
+                    />
+
+                    <Field
+                      as="select"
+                      name="types"
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
+                      onChange={(e) => {
+                        setFieldValue("types", e.target.value);
+                        setFieldValue("status", "");
+                      }}
+                    >
+                      <option value="">Select Type</option>
+                      <option value="feature">Feature</option>
+                      <option value="bug">Bug</option>
+                    </Field>
+                    <ErrorMessage
+                      name="types"
+                      component="div"
+                      className="text-red-400 text-sm"
+                    />
+
+                    <Field
+                      as="select"
+                      name="status"
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
+                      disabled={!values.types}
+                    >
+                      <option value="">Select Status</option>
+                      {values.types === "feature" && (
+                        <>
+                          <option value="new">New</option>
+                          <option value="started">Started</option>
+                          <option value="completed">Completed</option>
+                        </>
+                      )}
+                      {values.types === "bug" && (
+                        <>
+                          <option value="new">New</option>
+                          <option value="started">Started</option>
+                          <option value="resolved">Resolved</option>
+                        </>
+                      )}
+                    </Field>
+                    <ErrorMessage
+                      name="status"
+                      component="div"
+                      className="text-red-400 text-sm"
+                    />
+
+                    {formData.existingScreenshot && !formData.screenshot && (
+                      <div className="mb-3">
+                        <p className="text-gray-400 text-sm mb-2">
+                          Current screenshot:
+                        </p>
+                        <img
+                          src={`http://localhost:3500/public/${formData.existingScreenshot}`}
+                          alt="Current Screenshot"
+                          className="w-full h-24 object-cover rounded border border-gray-700"
+                        />
+                      </div>
+                    )}
+
+                    <input
+                      type="file"
+                      name="screenshot"
+                      onChange={(e) =>
+                        setFieldValue("screenshot", e.target.files[0])
+                      }
+                      className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
+                    />
+
+                    <div className="flex justify-between mt-4">
+                      <button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition"
+                      >
+                        Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditBug(null)}
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </Form>
                 )}
-
-                <input
-                  type="file"
-                  name="screenshot"
-                  onChange={(e) => setFieldValue("screenshot", e.target.files[0])}
-                  className="border border-gray-600 bg-gray-900 p-3 w-full mb-3 rounded text-white"
-                />
-
-                <div className="flex justify-between mt-4">
-                  <button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition"
-                  >
-                    Update
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setEditBug(null)}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      )}
+              </Formik>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

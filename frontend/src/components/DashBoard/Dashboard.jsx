@@ -7,6 +7,7 @@ import {
   FaTimes, FaUsers, FaProjectDiagram,
   FaBug, FaSignOutAlt
 } from 'react-icons/fa';
+import { Bar, Doughnut, Scatter } from 'react-chartjs-2';
 
 import CreateUser from '../userRegister/UserRegister';
 import AdminUsersGrid from '../showAllUsers/ShowAllUser';
@@ -18,6 +19,31 @@ import AssignedProjects from '../Assigned Project/AssignedPro';
 import BugProjectqa from '../Bug Projects Qa/BugProjectsQa';
 import DeveloperAssigned from '../DeveloperDashBoard/Developer';
 import DevAssigned from '../AssignedProjectDev/AssignedProject';
+
+// Chart.js imports
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  PointElement
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement
+);
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
@@ -104,6 +130,49 @@ const DashboardLayout = () => {
         role === 'qa' ? qaMenuItems :
           role === 'dev' ? devMenuItems : [];
 
+  // Chart Data
+  const barData = {
+    labels: ['Users', 'Projects', 'Bugs'],
+    datasets: [
+      {
+        label: 'Total Count',
+        data: [totalUsers, totalProjects, totalBugs],
+        backgroundColor: ['#60A5FA', '#34D399', '#F87171'],
+      },
+    ],
+  };
+
+  const doughnutData = {
+    labels: ['Users', 'Projects', 'Bugs'],
+    datasets: [
+      {
+        data: [totalUsers, totalProjects, totalBugs],
+        backgroundColor: ['#60A5FA', '#34D399', '#F87171'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const scatterData = {
+    datasets: [
+      {
+        label: 'Users vs Projects',
+        data: [{ x: totalUsers, y: totalProjects }],
+        backgroundColor: '#60A5FA',
+      },
+      {
+        label: 'Projects vs Bugs',
+        data: [{ x: totalProjects, y: totalBugs }],
+        backgroundColor: '#34D399',
+      },
+      {
+        label: 'Users vs Bugs',
+        data: [{ x: totalUsers, y: totalBugs }],
+        backgroundColor: '#F87171',
+      }
+    ],
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <nav className="bg-gray-900 p-4 flex items-center shadow-lg border-b border-gray-700">
@@ -152,7 +221,9 @@ const DashboardLayout = () => {
           {activeSection === 'overview' && role === 'admin' && (
             <>
               <h1 className="text-4xl font-bold text-center mb-10">📊 System Overview</h1>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              
+              {/* Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="bg-gray-800 p-6 rounded-xl text-center border border-gray-700 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all">
                   <FaUsers className="text-blue-400 text-5xl mb-2" />
                   <h2 className="text-xl font-semibold mb-2">Total Users</h2>
@@ -169,6 +240,22 @@ const DashboardLayout = () => {
                   <FaBug className="text-red-400 text-5xl mb-2" />
                   <h2 className="text-xl font-semibold mb-2">Total Bugs</h2>
                   <p className="text-gray-200 text-3xl">{totalBugs}</p>
+                </div>
+              </div>
+
+              {/* Charts */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                  <h2 className="text-xl font-semibold mb-4">Bar Chart</h2>
+                  <Bar data={barData} />
+                </div>
+                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                  <h2 className="text-xl font-semibold mb-4">Pi Chart</h2>
+                  <Doughnut data={doughnutData} />
+                </div>
+                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                  <h2 className="text-xl font-semibold mb-4">Scatter Plot</h2>
+                  <Scatter data={scatterData} />
                 </div>
               </div>
             </>
